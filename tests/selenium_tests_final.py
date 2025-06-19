@@ -28,7 +28,8 @@ class LostFoundWebsiteTests(unittest.TestCase):
         
         # Initialize the Chrome driver with automatic ChromeDriver installation
         cls.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-        cls.base_url = "http://localhost:5173"  # Update with your frontend URL
+        cls.base_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")  # Updated to use env var
+        cls.api_url = os.environ.get("BACKEND_URL", "http://localhost:5000") # Update with your frontend URL
         cls.wait = WebDriverWait(cls.driver, 10)
         
         # Generate random test data to use across all tests
