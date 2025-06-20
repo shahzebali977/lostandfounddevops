@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Get environment variables or use defaults
+export FRONTEND_URL=${FRONTEND_URL:-http://localhost:5173}
+export BACKEND_URL=${BACKEND_URL:-http://localhost:5000}
+
+echo "Running Selenium tests against:"
+echo "Frontend: $FRONTEND_URL"
+echo "Backend: $BACKEND_URL"
+
+# Create a modified version of the test file with the correct URLs
+sed "s|http://localhost:5173|$FRONTEND_URL|g" selenium_tests_final.py > selenium_tests_with_env.py
+
+# Run the tests
+python3 -m pytest selenium_tests_with_env.py -v --html=reports/selenium-report.html
+
+# Return the pytest exit code
+exit $?
